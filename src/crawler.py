@@ -4,7 +4,6 @@ from urllib.parse import urljoin, urlparse
 
 
 def extract_links(soup, base_url):
-    soup = BeautifulSoup(soup, 'html.parser')
     links = set()
     
     for tag in soup.find_all('a', href=True):
@@ -53,5 +52,6 @@ def crawl(base_url, delay=6):
             if link not in visited and link not in queued:
                 to_visit.append(link)
                 queued.add(link)
-        
+                
+        print(f"[{len(visited)}] Fetched {url}")
     return pages

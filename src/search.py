@@ -1,4 +1,4 @@
-from src.indexer import tokenise
+from indexer import tokenise
 
 def find(query, index):
     tokens = tokenise(query)

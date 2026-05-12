@@ -22,8 +22,7 @@ def test_tokenise_preserves_numbers():
 
 
 def test_build_index_counts_frequency():
-    """Word frequency per page is counted correctly."""
-    pages = {"url1": "good good good"}
+    pages = {"url1": "good goOd GOod"}
     index = build_index(pages)
     assert index["good"]["url1"]["freq"] == 3
 
