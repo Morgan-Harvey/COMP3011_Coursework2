@@ -1,15 +1,17 @@
 import os
-from crawler import crawl
-from indexer import build_index, save_index, load_index
-from search import find, print_word
+from src.crawler import crawl
+from src.indexer import build_index, save_index, load_index
+from src.search import find, print_word
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX_FILE = os.path.join(PROJECT_ROOT, "data", "index.json")
+REL_PATH = os.path.relpath(INDEX_FILE, PROJECT_ROOT)
+
 
 BASE_URL = "https://quotes.toscrape.com/"
 
 def index_builder():
-    print("Crawling Base_url")
+    print(f"Crawling {BASE_URL}")
     pages = crawl(BASE_URL)
     print(f"Crawled {len(pages)} pages.")
     
@@ -17,21 +19,21 @@ def index_builder():
     index = build_index(pages)
     
     os.makedirs("data", exist_ok=True)
-    save_index(index, INDEX_FILE)
+    save_index(index, REL_PATH)
 
-    print(f"Index saved to {INDEX_FILE}")
+    print(f"Index saved to {REL_PATH}")
 
     return index
 
 
 def index_loader():
     try:
-        index = load_index(INDEX_FILE)
+        index = load_index(REL_PATH)
     except FileNotFoundError:
         print("No index file found. Run 'build' first.")
         return None
 
-    print(f"Index loaded from {INDEX_FILE}")
+    print(f"Index loaded from {REL_PATH}")
     return index
 
 def main():

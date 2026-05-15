@@ -1,5 +1,3 @@
-"""Tests for the indexer module."""
-
 from src.indexer import tokenise, build_index, save_index, load_index
 
 def test_tokenise_basic():
@@ -28,8 +26,6 @@ def test_build_index_counts_frequency():
 
 
 def test_build_index_records_positions():
-    """Positions are 0-indexed word offsets within the page."""
-    
     pages = {"url1": "alpha beta alpha"}
     index = build_index(pages)
     
@@ -37,8 +33,6 @@ def test_build_index_records_positions():
 
 
 def test_build_index_multiple_pages():
-    """A word appearing in multiple pages has an entry per URL."""
-    
     pages = {
         "url1": "good day",
         "url2": "good night"
@@ -51,13 +45,10 @@ def test_build_index_multiple_pages():
 
 
 def test_build_index_empty_pages():
-    """An empty pages dict produces an empty index."""
-    
     assert build_index({}) == {}
 
 
 def test_save_and_load_round_trip(tmp_path):
-    """An index saved to disk should load back identically."""
     index = {"hello": {"url1": {"freq": 1, "positions": [0]}}}
     filepath = tmp_path / "test_index.json"
     save_index(index, str(filepath))
